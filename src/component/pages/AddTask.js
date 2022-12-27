@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTask } from '../../Slices/taskSlice';
 import LoaderText from '../LoaderText'
 
-const AddTask = () => {
-
-    const {isLoading,addTask,error} = useSelector(state=>state.tasks)
+const AddTask = () => {  
     const dispatch = useDispatch()
+    const {isLoading,error} = useSelector(state=>state.tasks)
     const hadleSubmit = (e)=>{
         e.preventDefault()
         const form = e.target
@@ -22,18 +21,11 @@ const AddTask = () => {
         const post = {
             title,details
         }
-        console.log(post)
         dispatch(createTask(post))
-
-        if(addTask.acknowledged){
-            toast.success('Your post is added successfully')
-            form.reset()
-        }
-        if(error){
-            toast.error('Something went wrong. Try again')
-    
-        }
+        form.reset()
+        
     }
+  
 
 
 
@@ -41,6 +33,9 @@ const AddTask = () => {
        
             <div className="flex justify-center items-center min-h-[80vh] mt-6">
         <div className="w-full max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300">
+              {/* {
+                  error&&<p className='text-red-600 bg-red-200 p-2'>Something went wrong try agian latter</p>
+              } */}
           <div className='flex items-center gap-3'>
           <h2 className='text-3xl font-bold text-blue-400 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
                 Add Task

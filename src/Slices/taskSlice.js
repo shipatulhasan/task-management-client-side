@@ -1,12 +1,19 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
+import toast from 'react-hot-toast'
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks',async()=>{
-    const res = await fetch('http://localhost:5000/task')
+    try{
+        const res = await fetch('http://localhost:5000/task')
     const data = await res.json()
     return data
+    }
+    catch(err){
+        console.error(err.message)
+    }
 })
 export const createTask = createAsyncThunk('tasks/createTask',async(post)=>{
-    const res = await fetch('http://localhost:5000/task',{
+    try{
+        const res = await fetch('http://localhost:5000/task',{
         method:'post',
         headers:{
             'content-type':'application/json'
@@ -14,7 +21,15 @@ export const createTask = createAsyncThunk('tasks/createTask',async(post)=>{
         body:JSON.stringify(post)
     })
     const data = await res.json()
+    if(data.acknowledged){
+        toast.success('Your post is added successfully')
+    }
     return data
+}
+catch(err){
+    console.error(err.message)
+    toast.error('Something went wrong')
+    }
 })
 export const deleteTask = createAsyncThunk('tasks/deleteTask',async(id)=>{
     const res = await fetch(`http://localhost:5000/task/${id}`,{
@@ -67,6 +82,7 @@ const taskSlice = createSlice({
             const id = action.payload.id
             console.log(id)
             state.tasks=state.tasks.filter((task)=>task._id!==id)
+           
             state.error=null
         })
         builder.addCase(deleteTask.rejected,(state,action)=>{
