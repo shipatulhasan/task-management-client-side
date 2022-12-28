@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {FiImage} from 'react-icons/fi'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoaderText from '../../LoaderText'
 import {authFunction} from '../../../AuthProvider/AuthProvider'
+import {uploadImage} from '../../../api/uploadImage'
+import { saveUser, getToken } from '../../../Slices/userSlice';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { saveUser,uploadImage } from '../../../Slices/authSlice';
 
 const Registration = () => {
-    const {isLoading,image} = useSelector(state=>state.auth)
     const [isOpen,setIsOpen] = useState(false)
+    const [isLoading,setIsLoading]= useState(false)
+    const {token} = useSelector(state=>state.user)
+
     const dispatch = useDispatch()
+  
+    const navigate = useNavigate()
 
   const {createUser,updateUser} = authFunction
     const hadleSubmit = (e)=>{
@@ -22,21 +28,30 @@ const Registration = () => {
         const password=form.password.value
         const img = form.image.files[0]
 
-        dispatch(uploadImage(img))
-        const profile = {
-          displayName:name,
-          photoURL:image.url
-      }
-      const userInfo={
-        name,email,image:image.url
-      }
-      createUser(email,password)
-          .then(user=>{
-            console.log(user)
-            handleUpdate(profile)
-            dispatch(saveUser(userInfo))
-          })
-          .catch(err=>console.error(err.message))
+        setIsLoading(true)
+        uploadImage(img)
+        .then(image=>{
+          const profile = {
+            displayName:name,
+            photoURL:image.url
+        }
+        const userInfo={
+          name,email,image:image.url
+        }
+        createUser(email,password)
+            .then(result=>{
+              console.log(result.user)
+              handleUpdate(profile)
+              dispatch(saveUser(userInfo))
+              dispatch(getToken(email))
+              setIsLoading(false)
+
+            })
+            .catch(err=>{
+              setIsLoading(false)
+              console.error(err.message)
+            })
+        })
   
     }
 
@@ -47,6 +62,12 @@ const Registration = () => {
       })
       .catch(err=>console.error(err.message))
     }
+useEffect(()=>{
+  if(token){
+
+    navigate('/')
+  }
+},[token,navigate])
 
 
     return (

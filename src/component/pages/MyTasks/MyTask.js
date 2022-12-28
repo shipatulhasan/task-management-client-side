@@ -8,6 +8,7 @@ import TaskSkeleton from './TaskSkeleton';
 
 const MyTask = () => {
     const {isLoading,tasks} = useSelector(state=>state.tasks)
+    const {userInfo} = useSelector(state=>state.auth)
     const [taskDetails,setTaskDetails] = useState({})
     const [existingTask,setExistingTask] = useState({})
     const[show,setShow]=useState(false)
@@ -16,8 +17,8 @@ const MyTask = () => {
    
     const dispatch = useDispatch()
     useEffect(()=>{
-        dispatch(fetchTasks())
-    },[dispatch,update])
+        dispatch(fetchTasks(userInfo?.email))
+    },[dispatch,update,userInfo?.email])
 
     const handleDelete = (id)=>{
         const task = tasks.find(task=>task._id===id)
@@ -42,7 +43,6 @@ const MyTask = () => {
         const post = {
             title,details,postDate:date
         }
-        console.log(post)
 
         dispatch(updateTask({post,_id}))
         setUpdate(!update)

@@ -1,9 +1,9 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit'
 import toast from 'react-hot-toast'
 
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks',async()=>{
+export const fetchTasks = createAsyncThunk('tasks/fetchTasks',async(email)=>{
     try{
-        const res = await fetch('http://localhost:5000/task')
+        const res = await fetch(`http://localhost:5000/task/${email}`)
     const data = await res.json()
     return data
     }
@@ -32,7 +32,7 @@ catch(err){
     }
 })
 export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=>{
-    console.log(post)
+    
    
     
     const res = await fetch(`http://localhost:5000/task/${_id}`,{

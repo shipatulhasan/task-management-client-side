@@ -1,25 +1,41 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authFunction } from "../../../AuthProvider/AuthProvider";
+import { getToken } from "../../../api/saveUser";
 import LoaderText from "../../LoaderText";
 
+
 const Login = () => {
-  const { isLoading } = useSelector((state) => state.tasks);
+  const [isLoading,setIsLoading]= useState(false)
+  const {signInUser} = authFunction
+
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
+
   const hadleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const user = {
-      name,
-      email,
-      password,
-    };
-    console.log(user);
+    
+    setIsLoading(true)
+    signInUser(email,password)
+    .then(result=>{
+     getToken(email)
+     .then(data=>{
+      if(data.token){
+
+        toast.success('Successfully loggedIn')
+        navigate('/')
+      }
+      })
+    })
+
   };
+
+
   return (
     <div className="flex justify-center items-center min-h-[80vh] mt-6">
       <div className="w-full max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300">

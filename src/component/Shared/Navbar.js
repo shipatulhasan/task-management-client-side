@@ -1,44 +1,79 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { authFunction } from '../../AuthProvider/AuthProvider';
 
 const Navbar = () => {
     const [isOpen,setIsOpen] = useState(false)
-    const state = useSelector(state=>state.auth) 
+    const {userInfo} = useSelector(state=>state.auth) 
+    const navigate = useNavigate()
+
+  const {logOut} = authFunction
+  const handleLogout = ()=>{
+    logOut()
+    .then(()=>{
+      navigate('/login')
+    })
+    .catch(err=>console.error(err.message))
+  }
+
+
+
+
     const menuList = <>
     <NavLink to='/'>
+      {({ isActive }) => (
+            <li
+              className={`${
+                isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            >
+              My Task
+            </li>
+          )}
+      </NavLink>
+    {
+      userInfo?.uid ? <>
+      <NavLink to='/addtask'>
+      {({ isActive }) => (
+            <li
+              className={`${
+                isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            >
+              Add Task
+            </li>
+          )}
+      </NavLink>
+      <NavLink onClick={handleLogout}>
+      {({ isActive }) => (
+            <li
+              className={`${
+                isActive ? " border-opacity-0" : 'border-opacity-0'
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            >
+              Logout
+            </li>
+          )}
+      </NavLink></> : 
+      <NavLink to='/login'>
     {({ isActive }) => (
           <li
             className={`${
               isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
-          >
-            My Task
-          </li>
-        )}
-    </NavLink>
-    <NavLink to='/addtask'>
-    {({ isActive }) => (
-          <li
-            className={`${
-              isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
-          >
-            Add Task
-          </li>
-        )}
-    </NavLink>
-    <NavLink to='/login'>
-    {({ isActive }) => (
-          <li
-            className={`${
-              isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border hover:border-opacity-100 border-blue-500 lg:mt-0`}
           >
             Login
           </li>
         )}
     </NavLink>
+    }
+    
+   
+    
+   
+   
+       
 
     </>
     return (
@@ -76,14 +111,12 @@ const Navbar = () => {
                     </div>
     
                     <div className="flex items-center mt-4 lg:mt-0">
-    
-                        <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
-                            <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" className="object-cover w-full h-full" alt="avatar" />
+                            <div className="w-12 h-12 overflow-hidden border-2 border-gray-400 rounded-full">
+                                <img src={userInfo?.photoURL} className="object-cover w-full h-full" alt="avatar" />
                             </div>
     
                             <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
-                        </button>
+                       
                     </div>
                 </div>
             </div>
