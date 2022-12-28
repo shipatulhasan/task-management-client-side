@@ -23,7 +23,7 @@ const DetailsTask = ({
               role="alert"
               className="container mx-auto w-11/12 md:w-2/3 grid place-content-center min-h-[80vh] "
             >
-              <div className="relative py-8 px-8 md:w-[500px] w-[400px] bg-white dark:bg-gray-800 dark:border-gray-700 shadow-md rounded border border-gray-400 space-y-6 ">
+              <div className="relative py-8 px-8 md:px-16 md:w-[500px] w-[400px] bg-white dark:bg-gray-800 dark:border-gray-700 shadow-md rounded border border-gray-400 space-y-6 ">
                 <div className="space-y-5 text-center">
                   <p className="text-sm  font-semibold  text-yellow-600 dark:text-gray-400">
                     {postDate}

@@ -30,7 +30,8 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpda
           <h2 className="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 ">
             {title}
           </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">{details}</p>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">
+              {details?.length>70 ? details.slice(0,70)+'...':details}</p>
         </div>
         </div>
 

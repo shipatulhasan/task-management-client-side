@@ -25,8 +25,8 @@ const MyTask = () => {
     const handleUpdate = (id)=>{
         const task = tasks.find(task=>task._id===id)
         setExistingTask(task)
-        console.log(task)
         setUpShow(!upShow)
+        setShow(false)
     }
     const hadleSubmit = (e,_id)=>{
         e.preventDefault()
@@ -41,6 +41,7 @@ const MyTask = () => {
 
         dispatch(updateTask({post,_id}))
         setUpdate(!update)
+        setUpShow(false)
         
 
     }
