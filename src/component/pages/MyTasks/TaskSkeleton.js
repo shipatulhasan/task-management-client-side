@@ -28,7 +28,10 @@ const TaskSkeleton = () => {
                 </div>
     
             <div className="w-full flex items-center gap-5">
-                <Skeleton width={40} height={40} circle/>
+                
+                <div className='w-full'>
+                <Skeleton />
+                </div>
                 <div className='w-full'>
                 <Skeleton />
                 </div>

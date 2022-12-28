@@ -7,6 +7,7 @@ import LoaderText from '../LoaderText'
 const AddTask = () => {  
     const dispatch = useDispatch()
     const {isLoading,error} = useSelector(state=>state.tasks)
+    const date = new Date().toLocaleString("en-US")
     const hadleSubmit = (e)=>{
         e.preventDefault()
         const form = e.target
@@ -19,7 +20,7 @@ const AddTask = () => {
         }
 
         const post = {
-            title,details
+            title,details,postDate:date
         }
         dispatch(createTask(post))
         form.reset()
