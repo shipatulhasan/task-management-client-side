@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {FaRegTrashAlt} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
 
-const TaskCard = ({ task, handleDelete, handleComplete }) => {
+const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpdate }) => {
   const { _id, title, details,postDate } = task;
  
 
@@ -12,7 +11,7 @@ const TaskCard = ({ task, handleDelete, handleComplete }) => {
       <div className="px-8 py-4 bg-white h-full rounded flex flex-col justify-between">
         <div>
         <div className="flex items-center justify-between">
-          <span className="text-sm font-light text-gray-600 dark:text-gray-400">
+          <span className="text-sm font-semibold  text-yellow-600 dark:text-gray-400">
             {postDate}
           </span>
           <button
@@ -36,23 +35,23 @@ const TaskCard = ({ task, handleDelete, handleComplete }) => {
         </div>
 
         <div className="flex items-center justify-between mt-4">
-          <Link
-            to="/"
-            className="text-purple-600 font-bold dark:text-blue-400 hover:underline"
+          <button
+            onClick={()=>handleDetails(_id)}
+            className="text-sm bg-pink-100 px-3 py-1 rounded-full text-pink-900 font-bold dark:text-blue-400 hover:underline"
           >
             View Details
-          </Link>
+          </button>
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => handleDelete(_id)}
+              onClick={() => handleUpdate(_id)}
               className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-purple-200 cursor-pointer hover:bg-purple-300 "
             >
               <FiEdit className="text-purple-800 hover:text-purple-900 font-extrabold"/>
             </button>
             <button
               onClick={() => handleDelete(_id)}
-              className="grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-red-200 cursor-pointer hover:bg-red-300 "
+              className="grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-red-200 cursor-pointer hover:bg-red-300"
             >
               <FaRegTrashAlt className="text-red-800 hover:text-red-900 font-extrabold"/>
             </button>
