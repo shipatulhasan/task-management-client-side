@@ -31,6 +31,24 @@ catch(err){
     toast.error('Something went wrong')
     }
 })
+export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=>{
+    console.log(post)
+   
+    
+    const res = await fetch(`http://localhost:5000/task/${_id}`,{
+        method:'put',
+        headers:{
+            'content-type':'application/json'
+        },
+        body:JSON.stringify(post)
+    })
+    const data = await res.json()
+    console.log(data)
+    if(data.result.modifiedCount>0){
+        toast.success('Your post is updated successfully')
+    }
+    return data
+})
 export const deleteTask = createAsyncThunk('tasks/deleteTask',async(id)=>{
     const res = await fetch(`http://localhost:5000/task/${id}`,{
         method:'delete',
@@ -72,6 +90,17 @@ const taskSlice = createSlice({
         builder.addCase(createTask.rejected,(state,action)=>{
             state.isLoading=false
             state.addTask={}
+            state.error=action.error.message
+        })
+        builder.addCase(updateTask.pending,(state)=>{
+            state.isLoading=true
+        })
+        builder.addCase(updateTask.fulfilled,(state,action)=>{
+            state.isLoading=false
+            state.error=null
+        })
+        builder.addCase(updateTask.rejected,(state,action)=>{
+            state.isLoading=false
             state.error=action.error.message
         })
         builder.addCase(deleteTask.pending,(state)=>{

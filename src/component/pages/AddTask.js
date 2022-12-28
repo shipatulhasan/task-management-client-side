@@ -1,12 +1,11 @@
 import React from 'react';
-import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTask } from '../../Slices/taskSlice';
 import LoaderText from '../LoaderText'
 
 const AddTask = () => {  
     const dispatch = useDispatch()
-    const {isLoading,error} = useSelector(state=>state.tasks)
+    const {isLoading} = useSelector(state=>state.tasks)
     const date = new Date().toLocaleString("en-US")
     const hadleSubmit = (e)=>{
         e.preventDefault()

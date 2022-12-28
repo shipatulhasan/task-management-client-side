@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
-import { deleteTask, fetchTasks } from '../../../Slices/taskSlice';
+import { deleteTask, fetchTasks, updateTask } from '../../../Slices/taskSlice';
 import UpdateTask from '../UpdateTask';
 import DetailsTask from './DetailsTask';
 import TaskCard from './TaskCard';
@@ -12,11 +12,12 @@ const MyTask = () => {
     const [existingTask,setExistingTask] = useState({})
     const[show,setShow]=useState(false)
     const[upShow,setUpShow]=useState(false)
+    const [update,setUpdate] = useState(false)
    
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(fetchTasks())
-    },[dispatch])
+    },[dispatch,update])
 
     const handleDelete = (id)=>{
         dispatch(deleteTask(id))
@@ -24,7 +25,24 @@ const MyTask = () => {
     const handleUpdate = (id)=>{
         const task = tasks.find(task=>task._id===id)
         setExistingTask(task)
+        console.log(task)
         setUpShow(!upShow)
+    }
+    const hadleSubmit = (e,_id)=>{
+        e.preventDefault()
+        const date = new Date().toLocaleString("en-US")
+        const form = e.target
+        const title= form.title.value
+        const details= form.details.value
+        const post = {
+            title,details,postDate:date
+        }
+        console.log(post)
+
+        dispatch(updateTask({post,_id}))
+        setUpdate(!update)
+        
+
     }
     const handleDetails = (id)=>{
         const task = tasks.find(task=>task._id===id)
@@ -52,6 +70,8 @@ const MyTask = () => {
                      task={existingTask}
                      setShow={setUpShow}
                      show={upShow}
+                     isLoading={isLoading}
+                     hadleSubmit={hadleSubmit}
                       />
                  }
                

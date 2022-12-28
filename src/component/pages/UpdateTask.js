@@ -1,20 +1,10 @@
 import React from 'react';
 import LoaderText from '../LoaderText'
 
-const UpdateTask = ({show,setShow,isLoading,task}) => {
-    const {title,details} = task
-    const date = new Date().toLocaleString("en-US")
+const UpdateTask = ({show,setShow,isLoading,task,hadleSubmit}) => {
+    const {_id,title,details} = task
     
-    const hadleSubmit = (e)=>{
-        e.preventDefault()
-        const form = e.target
-        const title= form.title.value
-        const details= form.details.value
-        const post = {
-            title,details,postDate:date
-        }
-    }
-
+    
     return (
         <>
         {show && (
@@ -33,7 +23,7 @@ const UpdateTask = ({show,setShow,isLoading,task}) => {
             </h2>
             <div className='h-[2px] w-1/3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mt-1'/>
           </div>
-        <form action="" onSubmit={hadleSubmit} className='space-y-5 py-5'>
+        <form action="" onSubmit={(e)=>hadleSubmit(e,_id)} className='space-y-5 py-5'>
             <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px]'>
 
                 <input
