@@ -1,23 +1,54 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import {FiImage} from 'react-icons/fi'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LoaderText from '../../LoaderText'
+import {authFunction} from '../../../AuthProvider/AuthProvider'
+
+import { saveUser,uploadImage } from '../../../Slices/authSlice';
 
 const Registration = () => {
-    const {isLoading} = useSelector(state=>state.tasks)
+    const {isLoading,image} = useSelector(state=>state.auth)
     const [isOpen,setIsOpen] = useState(false)
+    const dispatch = useDispatch()
+
+  const {createUser,updateUser} = authFunction
     const hadleSubmit = (e)=>{
         e.preventDefault()
         const form = e.target
         const name=form.name.value
         const email=form.email.value
         const password=form.password.value
-        const user = {
-            name,email,password
-        }
-        console.log(user)
+        const img = form.image.files[0]
+
+        dispatch(uploadImage(img))
+        const profile = {
+          displayName:name,
+          photoURL:image.url
+      }
+      const userInfo={
+        name,email,image:image.url
+      }
+      createUser(email,password)
+          .then(user=>{
+            console.log(user)
+            handleUpdate(profile)
+            dispatch(saveUser(userInfo))
+          })
+          .catch(err=>console.error(err.message))
+  
     }
+
+    const handleUpdate = (profile)=>{
+      updateUser(profile)
+      .then(()=>{
+
+      })
+      .catch(err=>console.error(err.message))
+    }
+
+
     return (
         <div className="flex justify-center items-center min-h-[80vh] mt-6">
         <div className="w-full max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300">
@@ -63,7 +94,7 @@ const Registration = () => {
               Sign Up with google
             </button>
           </div>
-        <form action="" onSubmit={hadleSubmit} className='space-y-5 py-5'>
+        <form action="" onSubmit={hadleSubmit} className='space-y-5 pt-3'>
             <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px]'>
 
                 <input
@@ -101,10 +132,23 @@ const Registration = () => {
               }
               </div>
             </div>
-         
 
-              
+            <div className=''>
+            <label className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px] inline-block hover:cursor-pointer '>
+                <input
+                className="px-4 py-3 text-gray-800 border focus:outline-none rounded hidden"
+                type="file"
+                name='image'
+                required
+              />
+              <div className='bg-white p-2 text-slate-700 font-xl rounded'>
 
+                <FiImage className='text-xl' />
+                
+              </div>
+              </label>
+              {/* <img src={img} alt="" /> */}
+            </div>
             <div className="mt-8">
               <button
                 className="focus:ring-2 focus:ring-offset-2 focus:ring-slate-100 text-base font-semibold leading-none text-slate-700 focus:outline-none bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 border rounded py-4 w-full hover:from-purple-200 hover:via-pink-200 hover:to-indigo-200"
@@ -115,7 +159,7 @@ const Registration = () => {
             </div>
                
             </form>
-            <p className="text-base mt-4 font-medium leading-none text-gray-800">
+            <p className="text-base font-medium leading-none text-gray-800">
             Already have account?{" "}
             <Link
               to="/login"

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen,setIsOpen] = useState(false)
+    const state = useSelector(state=>state.auth) 
     const menuList = <>
     <NavLink to='/'>
     {({ isActive }) => (
@@ -26,6 +28,17 @@ const Navbar = () => {
           </li>
         )}
     </NavLink>
+    <NavLink to='/login'>
+    {({ isActive }) => (
+          <li
+            className={`${
+              isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
+            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+          >
+            Login
+          </li>
+        )}
+    </NavLink>
 
     </>
     return (
@@ -35,6 +48,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between">
                     <div className="text-xl font-semibold text-gray-700">
                         <p className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300">Task manager</p>
+                   
                     </div>
     
                     {/* <!-- Mobile menu button --> */}

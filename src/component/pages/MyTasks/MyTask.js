@@ -20,7 +20,12 @@ const MyTask = () => {
     },[dispatch,update])
 
     const handleDelete = (id)=>{
-        dispatch(deleteTask(id))
+        const task = tasks.find(task=>task._id===id)
+        const permission = window.confirm(`would you like to delete ${task.title}`)
+        if(permission){
+
+            dispatch(deleteTask(id))
+        }
     }
     const handleUpdate = (id)=>{
         const task = tasks.find(task=>task._id===id)

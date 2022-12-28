@@ -65,7 +65,7 @@ const Login = () => {
             Sign in with google
           </button>
         </div>
-        <form action="" onSubmit={hadleSubmit} className="space-y-5 py-5">
+        <form action="" onSubmit={hadleSubmit} className="space-y-5 pt-3">
           <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px]">
             <input
               className="w-full px-4 py-3 text-gray-800 border focus:outline-none rounded "
@@ -100,7 +100,7 @@ const Login = () => {
             </button>
           </div>
         </form>
-        <p className="text-base mt-4 font-medium leading-none text-gray-800">
+        <p className="text-base font-medium leading-none text-gray-800">
           Don't have any account?{" "}
           <Link
             to="/signup"
