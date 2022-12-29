@@ -6,7 +6,7 @@ const Main = () => {
     return (
         <div>
             <Navbar />
-            <ScrollRestoration />
+           
             <Outlet />
         </div>
     );

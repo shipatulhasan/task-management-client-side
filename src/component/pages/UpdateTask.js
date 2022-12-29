@@ -1,5 +1,5 @@
 import React from 'react';
-import LoaderText from '../LoaderText'
+import LoaderText from '../Shared/Spinner/LoaderText'
 
 const UpdateTask = ({show,setShow,isLoading,task,hadleSubmit}) => {
     const {_id,title,details} = task

@@ -3,13 +3,12 @@ import { FiImage } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadImage } from '../../api/uploadImage';
 import { createTask } from '../../Slices/taskSlice';
-import LoaderText from '../LoaderText'
+import LoaderText from '../Shared/Spinner/LoaderText'
 
 const AddTask = () => {  
     const dispatch = useDispatch()
     const {isLoading} = useSelector(state=>state.tasks)
     const {userInfo} = useSelector(state=>state.auth)
-    const [image,setImage] = useState('')
     const date = new Date().toLocaleString("en-US")
     const hadleSubmit = (e)=>{
         e.preventDefault()

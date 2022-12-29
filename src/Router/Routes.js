@@ -6,6 +6,7 @@ import Registration from "../component/pages/Forms/Registration";
 import InCompleteTasks from "../component/pages/InCompleteTasks";
 import Home from '../component/pages/Home/Home'
 import Main from "../Laouts/Main";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -18,15 +19,15 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/mytask',
-                element:<InCompleteTasks/>
+                element:<PrivateRoute><InCompleteTasks/></PrivateRoute>
             },
             {
                 path:'/addtask',
-                element:<AddTask />
+                element:<PrivateRoute><AddTask /></PrivateRoute>
             },
             {
                 path:'/completed-task',
-                element:<CompletedTask />
+                element:<PrivateRoute><CompletedTask /></PrivateRoute>
             },
             {
                 path:'/signup',

@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authFunction } from "../../../AuthProvider/AuthProvider";
 import { getToken } from "../../../api/saveUser";
-import LoaderText from "../../LoaderText";
+import LoaderText from "../../Shared/Spinner/LoaderText";
 
 
 const Login = () => {
   const [isLoading,setIsLoading]= useState(false)
-  const {signInUser} = authFunction
-
-  const navigate = useNavigate()
+  const {signInUser,googleSingIn} = authFunction
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  let from = location.state?.from?.pathname || "/";
 
   const hadleSubmit = (e) => {
     e.preventDefault();
@@ -25,23 +29,44 @@ const Login = () => {
     .then(result=>{
      getToken(email)
      .then(data=>{
-      if(data.token){
-
+      if(data?.token){
+        localStorage.setItem("task-token", data.token);
         toast.success('Successfully loggedIn')
-        navigate('/')
+        navigate(from, { replace: true });
       }
       })
     })
 
   };
 
+    const handleGoogle = ()=>{
+    googleSingIn()
+    .then(result=>{
+      const user = result.user
+      getToken(user.email)
+     .then(data=>{
+      if(data?.token){
+        localStorage.setItem("task-token", data.token);
+        toast.success('Successfully loggedIn')
+        navigate(from, { replace: true });
+      }
+      })
+    })
+    .catch(err=>{
+        const message = err.message.split("/")[1].replace(/[-)]/g, " ");
+      setError(message);
+    })
+}
+
 
   return (
     <div className="flex justify-center items-center min-h-[80vh] mt-6">
       <div className="w-full max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300">
-        {/* {
-                  error&&<p className='text-red-600 bg-red-200 p-2'>Something went wrong try agian latter</p>
-              } */}
+      {error && (
+          <p className="text-red-700 bg-red-100 font-bold capitalize p-2">
+            {error}
+          </p>
+        )}
         <div className="flex items-center gap-3 mb-5">
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
             Sing in your account
@@ -52,7 +77,7 @@ const Login = () => {
           <button
             className="bg-white flex items-center rounded gap-5  px-2 py-1"
             aria-label="Sign Up with google"
-            //   onClick={handleSignUpWithGoogle}
+              onClick={handleGoogle}
           >
             <svg
               width={19}

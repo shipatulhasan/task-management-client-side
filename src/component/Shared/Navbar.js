@@ -6,13 +6,13 @@ import { authFunction } from '../../AuthProvider/AuthProvider';
 const Navbar = () => {
     const [isOpen,setIsOpen] = useState(false)
     const {userInfo} = useSelector(state=>state.auth) 
-    const navigate = useNavigate()
+
 
   const {logOut} = authFunction
   const handleLogout = ()=>{
     logOut()
     .then(()=>{
-      navigate('/login')
+      localStorage.removeItem('task-token')
     })
     .catch(err=>console.error(err.message))
   }
@@ -125,15 +125,17 @@ const Navbar = () => {
                     <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
                         {menuList}
                     </div>
-    
-                    <div className="flex items-center mt-4 lg:mt-0">
-                            <div className="w-12 h-12 overflow-hidden border-2 border-gray-400 rounded-full">
-                                <img src={userInfo?.photoURL} className="object-cover w-full h-full" alt="avatar" />
-                            </div>
-    
-                            <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
-                       
-                    </div>
+                    {
+                      userInfo?.uid && <div className="flex items-center mt-4 lg:mt-0">
+                      <div className="w-12 h-12 overflow-hidden border-2 border-gray-400 rounded-full">
+                          <img src={userInfo?.photoURL} className="object-cover w-full h-full" alt="avatar" />
+                      </div>
+
+                      <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
+                 
+              </div>
+                    }
+                    
                 </div>
             </div>
         </div>

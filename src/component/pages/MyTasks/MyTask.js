@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { deleteTask, fetchTasks, updateTask } from '../../../Slices/taskSlice';
 import UpdateTask from '../UpdateTask';
 import DetailsTask from './DetailsTask';
@@ -14,6 +15,7 @@ const MyTask = ({myTasks}) => {
     const[show,setShow]=useState(false)
     const[upShow,setUpShow]=useState(false)
     const [update,setUpdate] = useState(false)
+    const navigate = useNavigate()
     
    
     const dispatch = useDispatch()
@@ -30,6 +32,7 @@ const MyTask = ({myTasks}) => {
             const post = {completed:false}
             dispatch(updateTask({post,_id}))
             setUpdate(!update)
+            navigate('/mytask')
         }
     }
     const handleComplete = (_id)=>{
@@ -39,6 +42,7 @@ const MyTask = ({myTasks}) => {
             const post = {completed:true}
             dispatch(updateTask({post,_id}))
             setUpdate(!update)
+            navigate('/completed-task')
         }
     }
     const handleDelete = (id)=>{

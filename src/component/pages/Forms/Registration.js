@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FiImage } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import LoaderText from "../../LoaderText";
+import LoaderText from "../../Shared/Spinner/LoaderText";
 import { authFunction } from "../../../AuthProvider/AuthProvider";
 import { uploadImage } from "../../../api/uploadImage";
 
@@ -66,14 +66,16 @@ const Registration = () => {
   const handleGoogle = ()=>{
     googleSingIn()
     .then(result=>{
+      const user = result.user
+      console.log(result)
       const userInfo = {
-        name:result.displayName,
-        email:result.email,
-        image: result.photoURL,
+        name:user.displayName,
+        email:user.email,
+        image: user.photoURL,
       };
       saveUser(userInfo).then((data) => {
         if (data.acknowledged) {
-          handleToken(result.email);
+          handleToken(user.email);
           setError(' ')
         }
       });
