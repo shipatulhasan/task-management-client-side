@@ -4,6 +4,7 @@ import CompletedTask from "../component/pages/CompletedTasks";
 import Login from "../component/pages/Forms/Login";
 import Registration from "../component/pages/Forms/Registration";
 import InCompleteTasks from "../component/pages/InCompleteTasks";
+import Home from '../component/pages/Home/Home'
 import Main from "../Laouts/Main";
 
 export const router = createBrowserRouter([
@@ -13,14 +14,18 @@ export const router = createBrowserRouter([
         children:[
             {
                 path:'/',
-                element:<InCompleteTasks />
+                element:<Home/>
+            },
+            {
+                path:'/mytask',
+                element:<InCompleteTasks/>
             },
             {
                 path:'/addtask',
                 element:<AddTask />
             },
             {
-                path:'/completed',
+                path:'/completed-task',
                 element:<CompletedTask />
             },
             {

@@ -17,7 +17,7 @@ const Registration = () => {
 
   const navigate = useNavigate();
 
-  const { createUser, updateUser } = authFunction;
+  const { createUser, updateUser, googleSingIn } = authFunction;
   const hadleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -44,6 +44,7 @@ const Registration = () => {
           saveUser(userInfo).then((data) => {
             if (data.acknowledged) {
               handleToken(email);
+              setError('')
             }
           });
         })
@@ -61,6 +62,27 @@ const Registration = () => {
       .then(() => {})
       .catch((err) => console.error(err.message));
   };
+
+  const handleGoogle = ()=>{
+    googleSingIn()
+    .then(result=>{
+      const userInfo = {
+        name:result.displayName,
+        email:result.email,
+        image: result.photoURL,
+      };
+      saveUser(userInfo).then((data) => {
+        if (data.acknowledged) {
+          handleToken(result.email);
+          setError(' ')
+        }
+      });
+    })
+    .catch(err=>{
+        const message = err.message.split("/")[1].replace(/[-)]/g, " ");
+      setError(message);
+    })
+}
 
   const handleToken = (email) => {
     getToken(email).then((data) => {
@@ -84,6 +106,7 @@ const Registration = () => {
         </div>
         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded inline-block">
           <button
+          onClick={handleGoogle}
             className="bg-white flex items-center rounded gap-5  px-2 py-1"
             aria-label="Sign Up with google"
             //   onClick={handleSignUpWithGoogle}

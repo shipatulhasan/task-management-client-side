@@ -28,7 +28,7 @@ const Navbar = () => {
                 isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
               } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
-              My Task
+              Home
             </li>
           )}
       </NavLink>
@@ -42,6 +42,28 @@ const Navbar = () => {
               } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
               Add Task
+            </li>
+          )}
+      </NavLink>
+      <NavLink to='/mytask'>
+      {({ isActive }) => (
+            <li
+              className={`${
+                isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            >
+              My Task
+            </li>
+          )}
+      </NavLink>
+      <NavLink to='/completed-task'>
+      {({ isActive }) => (
+            <li
+              className={`${
+                isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            >
+              Completed task
             </li>
           )}
       </NavLink>
@@ -68,16 +90,10 @@ const Navbar = () => {
         )}
     </NavLink>
     }
-    
-   
-    
-   
-   
-       
 
     </>
     return (
-        <nav className={` relative bg-white border-b  dark:bg-gray-800`}>
+        <nav className={` relative  dark:bg-gray-800`}>
         <div className="container px-6 py-4 mx-auto">
             <div className="lg:flex lg:items-center lg:justify-between">
                 <div className="flex items-center justify-between">

@@ -43,7 +43,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=
         body:JSON.stringify(post)
     })
     const data = await res.json()
-    console.log(data)
+  
     if(data.result.modifiedCount>0){
         toast.success('Your task is updated successfully')
     }
@@ -109,7 +109,6 @@ const taskSlice = createSlice({
         builder.addCase(deleteTask.fulfilled,(state,action)=>{
             state.isLoading=false
             const id = action.payload.id
-            console.log(id)
             state.tasks=state.tasks.filter((task)=>task._id!==id)
            
             state.error=null

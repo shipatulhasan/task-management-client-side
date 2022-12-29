@@ -23,12 +23,22 @@ const MyTask = ({myTasks}) => {
 
     
 
+    const handleInComplete = (_id)=>{
+        const task = tasks.find(task=>task._id===_id)
+        const permission = window.confirm(`Are your sure that ${task.title} is Incompleted`)
+        if(permission){
+            const post = {completed:false}
+            dispatch(updateTask({post,_id}))
+            setUpdate(!update)
+        }
+    }
     const handleComplete = (_id)=>{
         const task = tasks.find(task=>task._id===_id)
         const permission = window.confirm(`Are your sure that ${task.title} is completed`)
         if(permission){
             const post = {completed:true}
             dispatch(updateTask({post,_id}))
+            setUpdate(!update)
         }
     }
     const handleDelete = (id)=>{
@@ -72,7 +82,7 @@ const MyTask = ({myTasks}) => {
         <div className='p-10'>
              <div className="grid gap-5 row-gap-5 sm:grid-cols-2 lg:grid-cols-3">
                  {
-                     isLoading ? <TaskSkeleton /> :myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleUpdate={handleUpdate} handleComplete={handleComplete} />)
+                     isLoading ? <TaskSkeleton /> :myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleUpdate={handleUpdate} handleComplete={handleComplete} handleInComplete={handleInComplete} />)
                  }
                  {
                      tasks&&<DetailsTask 
@@ -82,6 +92,7 @@ const MyTask = ({myTasks}) => {
                      handleDelete={handleDelete}
                      handleUpdate={handleUpdate}
                      handleComplete={handleComplete}
+                    handleInComplete={handleInComplete}
                       />
                  }
                  {
