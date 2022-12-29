@@ -6,7 +6,7 @@ import DetailsTask from './DetailsTask';
 import TaskCard from './TaskCard';
 import TaskSkeleton from './TaskSkeleton';
 
-const MyTask = () => {
+const MyTask = ({myTasks}) => {
     const {isLoading,tasks} = useSelector(state=>state.tasks)
     const {userInfo} = useSelector(state=>state.auth)
     const [taskDetails,setTaskDetails] = useState({})
@@ -14,12 +14,23 @@ const MyTask = () => {
     const[show,setShow]=useState(false)
     const[upShow,setUpShow]=useState(false)
     const [update,setUpdate] = useState(false)
+    
    
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(fetchTasks(userInfo?.email))
     },[dispatch,update,userInfo?.email])
 
+    
+
+    const handleComplete = (_id)=>{
+        const task = tasks.find(task=>task._id===_id)
+        const permission = window.confirm(`Are your sure that ${task.title} is completed`)
+        if(permission){
+            const post = {completed:true}
+            dispatch(updateTask({post,_id}))
+        }
+    }
     const handleDelete = (id)=>{
         const task = tasks.find(task=>task._id===id)
         const permission = window.confirm(`would you like to delete ${task.title}`)
@@ -56,11 +67,12 @@ const MyTask = () => {
         setShow(!show)
     }
 
+
     return (
         <div className='p-10'>
              <div className="grid gap-5 row-gap-5 sm:grid-cols-2 lg:grid-cols-3">
                  {
-                     isLoading ? <TaskSkeleton /> :tasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleUpdate={handleUpdate} />)
+                     isLoading ? <TaskSkeleton /> :myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleUpdate={handleUpdate} handleComplete={handleComplete} />)
                  }
                  {
                      tasks&&<DetailsTask 
@@ -69,6 +81,7 @@ const MyTask = () => {
                      show={show}
                      handleDelete={handleDelete}
                      handleUpdate={handleUpdate}
+                     handleComplete={handleComplete}
                       />
                  }
                  {

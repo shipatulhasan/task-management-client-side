@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import toast from 'react-hot-toast'
 
 export const saveUser = createAsyncThunk('user/saveUser',async(user)=>{
     try{
@@ -11,10 +10,6 @@ export const saveUser = createAsyncThunk('user/saveUser',async(user)=>{
             body:JSON.stringify(user)
         })
         const data =await res.json()
-        if(data.acknowledged){
-            toast.success('Successfully registered')
-            console.log(data)
-        }
         return data
     }
     catch(err){
@@ -39,14 +34,16 @@ const userSlice = createSlice({
     initialState:{
         isLoading:false,
         token:'',
+        data:{},
         error:null
     },
     extraReducers:(builder)=>{
         builder.addCase(saveUser.pending,(state)=>{
             state.isLoading=true
         })
-        builder.addCase(saveUser.fulfilled,(state)=>{
+        builder.addCase(saveUser.fulfilled,(state,action)=>{
             state.isLoading=false
+            state.data=action.payload
             state.error=null
         })
         builder.addCase(saveUser.rejected,(state,action)=>{

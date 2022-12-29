@@ -45,7 +45,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=
     const data = await res.json()
     console.log(data)
     if(data.result.modifiedCount>0){
-        toast.success('Your post is updated successfully')
+        toast.success('Your task is updated successfully')
     }
     return data
 })
