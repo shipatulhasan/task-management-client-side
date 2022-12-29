@@ -1,6 +1,7 @@
 import React from "react";
 import {FaRegTrashAlt} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpdate,handleInComplete }) => {
   const { _id, title, details,postDate } = task;
@@ -45,8 +46,13 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpda
               {details?.length>70 ? details.slice(0,70)+'...':details}</p>
         </div>
         {
-          task?.image && <div className="mt-3 inline-block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded">
-          <img src={task?.image} className="w-14 h-14 border border-white rounded" alt="" />
+          task?.image && <div className="mt-3 inline-block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded hover:cursor-pointer">
+            <PhotoProvider>
+            <PhotoView src={task?.image}>
+            <img src={task?.image} className="w-14 h-14 border border-white rounded" alt="" />
+            </PhotoView>
+            </PhotoProvider>
+          
         </div>
         }
         

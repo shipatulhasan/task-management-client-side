@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './app/store';
 import { Provider } from 'react-redux'
 import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-photo-view/dist/react-photo-view.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

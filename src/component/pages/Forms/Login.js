@@ -60,7 +60,7 @@ const Login = () => {
 
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] mt-6">
+    <div className="flex justify-center items-center min-h-[80vh] py-12">
       <div className="w-full max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300">
       {error && (
           <p className="text-red-700 bg-red-100 font-bold capitalize p-2">

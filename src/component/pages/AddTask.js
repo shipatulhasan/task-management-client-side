@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FiImage } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadImage } from '../../api/uploadImage';
 import { createTask } from '../../Slices/taskSlice';
 import LoaderText from '../Shared/Spinner/LoaderText'
+import { usePreview } from '../../Hooks/usePreview';
 
 const AddTask = () => {  
     const dispatch = useDispatch()
     const {isLoading} = useSelector(state=>state.tasks)
     const {userInfo} = useSelector(state=>state.auth)
+    const [preview,handleChange] = usePreview()
     const date = new Date().toLocaleString("en-US")
     const hadleSubmit = (e)=>{
         e.preventDefault()
@@ -39,17 +41,13 @@ const AddTask = () => {
         dispatch(createTask(post))
         form.reset()
         }
-        
-
-        
-       
-        
+   
     }
 
     return (
        
-            <div className="flex justify-center items-center min-h-[80vh] mt-6 ">
-        <div className="w-full backdrop-blur-3xl bg-opacity-50 bg-white max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300 z-10">
+            <div className="flex justify-center items-center min-h-[60vh] py-10 px-4">
+        <div className="w-full bg-opacity-50 bg-white max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300 z-10">
               {/* {
                   error&&<p className='text-red-600 bg-red-200 p-2'>Something went wrong try agian latter</p>
               } */}
@@ -87,12 +85,18 @@ const AddTask = () => {
                 className="px-4 py-3 text-gray-800 border rounded w-0 h-0"
                 type="file"
                 name="image"
+                onChange={(e)=>handleChange(e.target.files[0])}
               />
               <div className="absolute inset-0 m-[1px] bg-white p-2 text-slate-700 font-xl rounded">
                 <FiImage className="text-xl" />
               </div>
             </label>
-            {/* <img src={img} alt="" /> */}
+            {
+              preview && <div className="mt-3 inline-block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded hover:cursor-pointer">
+
+              <img src={preview} className="w-14 h-14 border border-white rounded" alt="" />
+              </div>
+            }
           </div>
 
               

@@ -8,11 +8,12 @@ import { uploadImage } from "../../../api/uploadImage";
 
 import { getToken, saveUser } from "../../../api/saveUser";
 import toast from "react-hot-toast";
+import { usePreview } from "../../../Hooks/usePreview";
 
 const Registration = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [preview,handleChange] = usePreview()
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] mt-6">
+    <div className="flex justify-center items-center min-h-[80vh] py-12">
       <div className="w-full max-w-md p-8 space-y-3 text-gray-800 border border-slate-200 shadow-xl shadow-slate-300">
         <div className="flex items-center gap-3 mb-5">
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
@@ -186,13 +187,19 @@ const Registration = () => {
                 className="px-4 py-3 text-gray-800 border rounded w-0 h-0"
                 type="file"
                 name="image"
+                onChange={(e)=>handleChange(e.target.files[0])}
                 required
               />
               <div className="absolute inset-0 m-[1px] bg-white p-2 text-slate-700 font-xl rounded">
                 <FiImage className="text-xl" />
               </div>
             </label>
-            {/* <img src={img} alt="" /> */}
+            {
+              preview && <div className="mt-3 inline-block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded hover:cursor-pointer">
+
+              <img src={preview} className="w-14 h-14 border border-white rounded" alt="" />
+              </div>
+            }
           </div>
           <div className="mt-8">
             <button

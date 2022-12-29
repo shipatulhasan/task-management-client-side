@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks',async(email)=>{
     try{
-        const res = await fetch(`http://localhost:5000/task/${email}`)
+        const res = await fetch(`${process.env.REACT_APP_api}/task/${email}`)
     const data = await res.json()
     return data
     }
@@ -13,7 +13,7 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks',async(email)=>{
 })
 export const createTask = createAsyncThunk('tasks/createTask',async(post)=>{
     try{
-        const res = await fetch('http://localhost:5000/task',{
+        const res = await fetch(`${process.env.REACT_APP_api}/task`,{
         method:'post',
         headers:{
             'content-type':'application/json'
@@ -35,7 +35,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=
     
    
     
-    const res = await fetch(`http://localhost:5000/task/${_id}`,{
+    const res = await fetch(`${process.env.REACT_APP_api}/task/${_id}`,{
         method:'put',
         headers:{
             'content-type':'application/json'
@@ -50,7 +50,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=
     return data
 })
 export const deleteTask = createAsyncThunk('tasks/deleteTask',async(id)=>{
-    const res = await fetch(`http://localhost:5000/task/${id}`,{
+    const res = await fetch(`${process.env.REACT_APP_api}/task/${id}`,{
         method:'delete',
     })
     const data = await res.json()

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink,Link } from 'react-router-dom';
 import { authFunction } from '../../AuthProvider/AuthProvider';
 
 const Navbar = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
             <li
               className={`${
                 isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+              } text-black px-3 py-1 list-none lg:mr-2  font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 lg:border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
               Home
             </li>
@@ -39,7 +39,7 @@ const Navbar = () => {
             <li
               className={`${
                 isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 lg:border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
               Add Task
             </li>
@@ -50,7 +50,7 @@ const Navbar = () => {
             <li
               className={`${
                 isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 lg:border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
               My Task
             </li>
@@ -61,7 +61,7 @@ const Navbar = () => {
             <li
               className={`${
                 isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 lg:border  hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
               Completed task
             </li>
@@ -72,7 +72,7 @@ const Navbar = () => {
             <li
               className={`${
                 isActive ? " border-opacity-0" : 'border-opacity-0'
-              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border hover:border-opacity-100 border-blue-500 lg:mt-0`}
+              } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 lg:border hover:border-opacity-100 border-blue-500 lg:mt-0`}
             >
               Logout
             </li>
@@ -83,7 +83,7 @@ const Navbar = () => {
           <li
             className={`${
               isActive ? "bg-blue-200 bg-opacity-20 border-opacity-100" : 'border-opacity-0'
-            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 border hover:border-opacity-100 border-blue-500 lg:mt-0`}
+            } text-black px-3 py-1 list-none lg:mr-2 mt-2 font-bold transition-colors duration-300 transform hover:bg-blue-200 hover:bg-opacity-20 lg:border hover:border-opacity-100 border-blue-500 lg:mt-0`}
           >
             Login
           </li>
@@ -93,12 +93,12 @@ const Navbar = () => {
 
     </>
     return (
-        <nav className={` relative  dark:bg-gray-800`}>
+        <nav className={` relative w-full  dark:bg-gray-800`}>
         <div className="container px-6 py-4 mx-auto">
             <div className="lg:flex lg:items-center lg:justify-between">
-                <div className="flex items-center justify-between">
-                    <div className="text-xl font-semibold text-gray-700">
-                        <p className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300">Task manager</p>
+                <div className="flex items-center justify-between lg:flex-1 ">
+                    <div className="text-xl font-semibold ">
+                        <Link to='/' className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:cursor-pointer hover:text-gray-700 dark:hover:text-gray-300">Task manager</Link>
                    
                     </div>
     
@@ -121,17 +121,17 @@ const Navbar = () => {
                 </div>
     
                 {/* <!-- Mobile Menu open: "block", Menu closed: "hidden" --> */}
-                <div className={`${isOpen ?'translate-x-0 opacity-100 ': 'opacity-0 -translate-x-full'} absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center`}>
-                    <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
+                <div className={`${isOpen ?'translate-x-0 opacity-100 ': 'opacity-0 -translate-x-full'} absolute inset-x-0 z-20 w-11/12 mx-auto mt-2 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center`}>
+                    <div className="flex flex-col lg:w-full lg:flex-row lg:items-center lg:mx-8 ">
                         {menuList}
                     </div>
                     {
-                      userInfo?.uid && <div className="flex items-center mt-4 lg:mt-0">
+                      userInfo?.uid && <div className="flex items-center my-4 mx-3 lg:my-0">
                       <div className="w-12 h-12 overflow-hidden border-2 border-gray-400 rounded-full">
                           <img src={userInfo?.photoURL} className="object-cover w-full h-full" alt="avatar" />
                       </div>
 
-                      <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Khatab wedaa</h3>
+                      <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">{userInfo?.displayName}</h3>
                  
               </div>
                     }
