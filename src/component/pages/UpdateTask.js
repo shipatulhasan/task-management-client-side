@@ -1,15 +1,17 @@
 import React from 'react';
+import { FiImage } from 'react-icons/fi';
+import { usePreview } from '../../Hooks/usePreview';
 import LoaderText from '../Shared/Spinner/LoaderText'
 
-const UpdateTask = ({show,setShow,isLoading,task,hadleSubmit}) => {
-    const {_id,title,details} = task
-    
+const UpdateTask = ({show,setShow,isLoading,task,hadleUpdate}) => {
+    const {_id,title} = task
+    const [preview,handleChange] = usePreview()
     
     return (
         <>
         {show && (
           <div
-            className="py-12 bg-gray-700 bg-opacity-50 dark:bg-gray-900 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+            className="py-12 bg-gray-700 bg-opacity-50 dark:bg-gray-900 transition duration-150 ease-in-out absolute top-0 right-0 bottom-0 left-0 z-50"
             id="modal"
           >
             <div
@@ -23,12 +25,11 @@ const UpdateTask = ({show,setShow,isLoading,task,hadleSubmit}) => {
             </h2>
             <div className='h-[2px] w-1/3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mt-1'/>
           </div>
-        <form action="" onSubmit={(e)=>hadleSubmit(e,_id)} className='space-y-5 py-5'>
+        <form action="" onSubmit={(e)=>hadleUpdate(e,_id)} className='space-y-5 py-5'>
             <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px]'>
 
                 <input
                 className="w-full px-4 py-3 text-gray-800 border focus:outline-none rounded "
-                id="phone"
                 type="text"
                 name='title'
                 defaultValue={title}
@@ -36,16 +37,44 @@ const UpdateTask = ({show,setShow,isLoading,task,hadleSubmit}) => {
                 required
               />
             </div>
-            <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px]'>
-            <textarea
-            
-            name='details'
-            required
-            defaultValue={details}
-            className="block rounded focus:outline-none w-full h-20 px-4 py-3 text-gray-800 text-sm "
-            placeholder='task details...........'
-          ></textarea>
+            {
+             task?.details && <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded p-[1px]'>
+              <textarea
+              
+              name='details'
+           
+              defaultValue={task.details}
+              className="block rounded focus:outline-none w-full h-20 px-4 py-3 text-gray-800 text-sm "
+              placeholder='task details...........'
+            ></textarea>
+              </div>
+            }
+
+            {
+              task?.image &&   <div className="flex gap-3 items-center">
+              <label className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded inline-block hover:cursor-pointer relative p-[1px]">
+                <input
+                  className="px-4 py-3 text-gray-800 border rounded w-0 h-0"
+                  type="file"
+                  name="image"
+                  required
+                  onChange={(e)=>handleChange(e.target.files[0])}
+                />
+                <div className="absolute inset-0 m-[1px] bg-white p-2 text-slate-700 font-xl rounded">
+                  <FiImage className="text-xl" />
+                </div>
+              </label>
+              {
+                task?.image && <div className="mt-3 inline-block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded hover:cursor-pointer">
+  
+                <img src={preview?preview:task?.image} className="w-14 h-14 border border-white rounded" alt="" />
+                </div>
+              }
             </div>
+            }
+
+       
+            
 
               
 

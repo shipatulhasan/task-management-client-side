@@ -7,8 +7,9 @@ const InCompleteTasks = () => {
     const incompleted = tasks?.filter(task=>task.completed!==true)
     return (
         <>
+        <MyTask myTasks={incompleted} />
          {
-            incompleted.length===0&& <div className='mx-auto w-full min-h-[60vh] h-full grid place-content-center'>
+            incompleted.length===0&& <div className='mx-auto w-full min-h-[40vh] h-full grid place-content-center'>
                 <h2 className=" max-w-sm text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-normal text-center">
             You don't have any  {" "}
             <span className=" text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
@@ -17,7 +18,7 @@ const InCompleteTasks = () => {
           </h2>
             </div>
         }
-        <MyTask myTasks={incompleted} />
+        
         </>
     );
 };

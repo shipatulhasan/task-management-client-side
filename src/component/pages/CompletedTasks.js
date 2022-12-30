@@ -1,15 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import MyTask from './MyTasks/MyTask';
+import TaskSkeleton from './MyTasks/TaskSkeleton';
 
 
 const CompletedTask = () => {
-    const {tasks} = useSelector(state=>state.tasks)
+    const {isloading,tasks} = useSelector(state=>state.tasks)
     
     const completed = tasks?.filter(task=>task.completed===true)
+    if(isloading){
+        return <TaskSkeleton />
+    }
 
     return (
         <>
+        <MyTask myTasks={completed} />
         
         {
             completed?.length===0 && <div className='mx-auto w-full min-h-[60vh] h-full grid place-content-center'>
@@ -22,7 +27,7 @@ const CompletedTask = () => {
         </div>
             
         }
-        <MyTask myTasks={completed} />
+        
         </>
     );
 };

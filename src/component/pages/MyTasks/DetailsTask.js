@@ -9,7 +9,7 @@ const DetailsTask = ({
   show,
   handleDelete,
   handleComplete,
-  handleUpdate,
+  handleModal,
   handleInComplete
 }) => {
   const { _id, title, details, postDate } = taskDetails;
@@ -72,7 +72,7 @@ const DetailsTask = ({
                 </div>
                 <div className="flex items-center gap-4 justify-center">
                   <button
-                    onClick={() => handleUpdate(_id)}
+                    onClick={() => handleModal(_id)}
                     className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-purple-200 cursor-pointer hover:bg-purple-300 "
                   >
                     <FiEdit className="text-purple-800 hover:text-purple-900 font-extrabold" />

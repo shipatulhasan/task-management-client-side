@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import AddTask from "../component/pages/AddTask";
 import CompletedTask from "../component/pages/CompletedTasks";
 import Login from "../component/pages/Forms/Login";
 import Registration from "../component/pages/Forms/Registration";
@@ -7,6 +6,7 @@ import InCompleteTasks from "../component/pages/InCompleteTasks";
 import Home from '../component/pages/Home/Home'
 import Main from "../Laouts/Main";
 import PrivateRoute from "./PrivateRoute";
+import AddTaskTittle from "../component/pages/AddTaskTittle";
 
 export const router = createBrowserRouter([
     {
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/addtask',
-                element:<PrivateRoute><AddTask /></PrivateRoute>
+                element:<PrivateRoute><AddTaskTittle /></PrivateRoute>
             },
             {
                 path:'/completed-task',

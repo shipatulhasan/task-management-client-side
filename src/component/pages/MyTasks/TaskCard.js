@@ -1,15 +1,19 @@
-import React from "react";
-import {FaRegTrashAlt} from 'react-icons/fa'
+import React, { useState } from "react";
+import {FaPlus, FaRegTrashAlt} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
 import { PhotoProvider, PhotoView } from 'react-photo-view';
+import AddTask from "../AddTask";
 
-const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpdate,handleInComplete }) => {
+const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModal,handleInComplete,handleAddDetails,isLoading }) => {
   const { _id, title, details,postDate } = task;
+  const [isOpen,setIsOpen] = useState(false)
  
 
   return (
-    <div className="max-w-2xl rounded shadow-lg shadow-slate-300 dark:bg-gray-800  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px]">
-      <div className="px-8 py-4 bg-white h-full rounded flex flex-col justify-between">
+    <div>
+
+    <div className="max-w-2xl rounded shadow-lg shadow-slate-300 dark:bg-gray-800  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] transition-all duration-300 ease-in-out">
+      <div className="px-8 py-4 bg-white min-h-[176px] rounded flex flex-col justify-between transition-all duration-300 ease-in-out">
         <div>
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold  text-yellow-600 dark:text-gray-400">
@@ -48,11 +52,16 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpda
         {
           task?.image && <div className="mt-3 inline-block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded hover:cursor-pointer">
             <PhotoProvider>
-            <PhotoView src={task?.image}>
-            <img src={task?.image} className="w-14 h-14 border border-white rounded" alt="" />
+            <PhotoView src={task.image}>
+            <img src={task.image} className="w-14 h-14 border border-white rounded" alt="" />
             </PhotoView>
             </PhotoProvider>
           
+        </div>
+        }
+        {
+          isOpen &&<div className={`${isOpen?"translate-y-0 opacity-100":'-translate-y-full opacity-0'} transition-all duration-300 ease-in-out`}>
+          <AddTask _id={_id} handleAddDetails ={handleAddDetails} isLoading={isLoading} />
         </div>
         }
         
@@ -67,8 +76,14 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpda
           </button>
 
           <div className="flex items-center gap-4">
+          <button
+            onClick={()=>setIsOpen(!isOpen)}
+            className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-slate-200 cursor-pointer hover:bg-slate-300 " title="add details"
+          >
+            <FaPlus className="text-slate-800 hover:text-slate-900 font-extrabold"/>
+          </button>
             <button
-              onClick={() => handleUpdate(_id)}
+              onClick={() => handleModal(_id)}
               className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-purple-200 cursor-pointer hover:bg-purple-300 "
             >
               <FiEdit className="text-purple-800 hover:text-purple-900 font-extrabold"/>
@@ -83,6 +98,7 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleUpda
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

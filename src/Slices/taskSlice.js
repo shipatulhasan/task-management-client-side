@@ -61,6 +61,8 @@ const taskSlice = createSlice({
     name:'tasks',
     initialState:{
         isLoading:false,
+        updateLoading:false,
+        updateStatus:true,
         tasks:[],
         addTask:{},
         error:null
@@ -72,6 +74,7 @@ const taskSlice = createSlice({
         builder.addCase(fetchTasks.fulfilled,(state,action)=>{
             state.isLoading=false
             state.tasks=action.payload
+            state.updateStatus=false
             state.error=null
         })
         builder.addCase(fetchTasks.rejected,(state,action)=>{
@@ -93,14 +96,17 @@ const taskSlice = createSlice({
             state.error=action.error.message
         })
         builder.addCase(updateTask.pending,(state)=>{
-            state.isLoading=true
+            state.updateLoading=true
         })
         builder.addCase(updateTask.fulfilled,(state,action)=>{
+            state.updateLoading=false
             state.isLoading=false
+            state.updateStatus=true
             state.error=null
         })
         builder.addCase(updateTask.rejected,(state,action)=>{
-            state.isLoading=false
+            state.updateLoading=false
+            
             state.error=action.error.message
         })
         builder.addCase(deleteTask.pending,(state)=>{
@@ -110,7 +116,6 @@ const taskSlice = createSlice({
             state.isLoading=false
             const id = action.payload.id
             state.tasks=state.tasks.filter((task)=>task._id!==id)
-           
             state.error=null
         })
         builder.addCase(deleteTask.rejected,(state,action)=>{
