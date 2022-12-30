@@ -14,9 +14,7 @@ const AddTask = ({_id,handleAddDetails,isLoading}) => {
        
          
         <div className="w-full space-y-3 text-gray-800">
-              {/* {
-                  error&&<p className='text-red-600 bg-red-200 p-2'>Something went wrong try agian latter</p>
-              } */}
+            
      
         <form onSubmit={(e)=>handleAddDetails(e,_id)} className='space-y-5 py-5'>
           

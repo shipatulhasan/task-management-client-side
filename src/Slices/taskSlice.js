@@ -35,6 +35,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=
     
    
     
+   try{
     const res = await fetch(`${process.env.REACT_APP_api}/task/${_id}`,{
         method:'put',
         headers:{
@@ -48,13 +49,25 @@ export const updateTask = createAsyncThunk('tasks/updateTask',async({post,_id})=
         toast.success('Your task is updated successfully')
     }
     return data
+   }
+
+    catch(err){
+        console.error(err.message)
+        toast.error('Something went wrong')
+        }
 })
 export const deleteTask = createAsyncThunk('tasks/deleteTask',async(id)=>{
-    const res = await fetch(`${process.env.REACT_APP_api}/task/${id}`,{
-        method:'delete',
-    })
-    const data = await res.json()
-    return data
+    try{
+        const res = await fetch(`${process.env.REACT_APP_api}/task/${id}`,{
+            method:'delete',
+        })
+        const data = await res.json()
+        return data
+    }
+    catch(err){
+        console.error(err.message)
+        toast.error('Something went wrong')
+        }
 })
 
 const taskSlice = createSlice({

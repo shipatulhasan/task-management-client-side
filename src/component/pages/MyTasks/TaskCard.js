@@ -3,6 +3,7 @@ import {FaPlus, FaRegTrashAlt} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import AddTask from "../AddTask";
+import MyComment from "../MyComments/MyComments";
 
 const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModal,handleInComplete,handleAddDetails,isLoading }) => {
   const { _id, title, details,postDate } = task;
@@ -61,8 +62,13 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModa
         }
         {
           isOpen &&<div className={`${isOpen?"translate-y-0 opacity-100":'-translate-y-full opacity-0'} transition-all duration-300 ease-in-out`}>
-          <AddTask _id={_id} handleAddDetails ={handleAddDetails} isLoading={isLoading} />
+            {
+              !task?.completed?<AddTask _id={_id} handleAddDetails ={handleAddDetails} isLoading={isLoading} />:<MyComment id={_id} />
+            }
+          
         </div>
+        
+
         }
         
         </div>
@@ -78,7 +84,7 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModa
           <div className="flex items-center gap-4">
           <button
             onClick={()=>setIsOpen(!isOpen)}
-            className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-slate-200 cursor-pointer hover:bg-slate-300 " title="add details"
+            className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-slate-200 cursor-pointer hover:bg-slate-300 " title={!task?.completed?'Add section':'Add comment'}
           >
             <FaPlus className="text-slate-800 hover:text-slate-900 font-extrabold"/>
           </button>
