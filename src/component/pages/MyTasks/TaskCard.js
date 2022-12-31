@@ -3,7 +3,7 @@ import {FaPlus, FaRegTrashAlt} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import AddTask from "../AddTask";
-import MyComment from "../MyComments/MyComments";
+import {GoComment} from 'react-icons/go'
 
 const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModal,handleInComplete,handleAddDetails,isLoading }) => {
   const { _id, title, details,postDate } = task;
@@ -63,7 +63,7 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModa
         {
           isOpen &&<div className={`${isOpen?"translate-y-0 opacity-100":'-translate-y-full opacity-0'} transition-all duration-300 ease-in-out`}>
             {
-              !task?.completed?<AddTask _id={_id} handleAddDetails ={handleAddDetails} isLoading={isLoading} />:<MyComment id={_id} />
+              !task?.completed&&<AddTask _id={_id} handleAddDetails ={handleAddDetails} isLoading={isLoading} />
             }
           
         </div>
@@ -82,12 +82,23 @@ const TaskCard = ({ task, handleDelete, handleComplete, handleDetails,handleModa
           </button>
 
           <div className="flex items-center gap-4">
-          <button
-            onClick={()=>setIsOpen(!isOpen)}
-            className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-slate-200 cursor-pointer hover:bg-slate-300 " title={!task?.completed?'Add section':'Add comment'}
+            {
+              !task?.completed ? <button
+              onClick={()=>setIsOpen(!isOpen)}
+              className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-slate-200 cursor-pointer hover:bg-slate-300 " title="Add section"
+            >
+              <FaPlus className="text-slate-800 hover:text-slate-900 font-extrabold"/>
+            </button>
+            :
+            <button
+            onClick={() => handleDetails(_id)}
+            className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-purple-200 cursor-pointer hover:bg-purple-300 "
           >
-            <FaPlus className="text-slate-800 hover:text-slate-900 font-extrabold"/>
+            <GoComment className="text-slate-800 hover:text-slate-900 font-extrabold"/>
           </button>
+
+            }
+          
             <button
               onClick={() => handleModal(_id)}
               className=" grid place-content-center w-8 h-8 rounded-full text-sm font-bold transition-colors duration-300 transform bg-purple-200 cursor-pointer hover:bg-purple-300 "

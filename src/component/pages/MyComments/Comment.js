@@ -4,7 +4,7 @@ import { FaUserAlt } from 'react-icons/fa';
 const Comment = ({mycomment,index}) => {
     const {image,date,comment,user} = mycomment
     return (
-        <div className={`${index ? 'border-none' : 'border-b'} border-khaki pt-10 pb-0 mx-5 dark:text-white`}>
+        <div className={`${index ? 'border-none' : 'border-b'} border-khaki pt-10 pb-0 mx-5 dark:text-white text-left`}>
         <div className='flex justify-between items-center'>
         <div className="flex">
           <img

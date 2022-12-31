@@ -3,16 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCommnet, postCommnet } from '../../../Slices/commentSlice';
 import CommentForm from './CommentForm'
 import Comment from './Comment'
-
+import Loader from '../../Shared/Spinner/Loader'
 const MyComment = ({id}) => {
     
-    const {comments,commentLoading} = useSelector(state=>state.comment)
+    const {comments,commentLoading,update} = useSelector(state=>state.comment)
     const {userInfo} = useSelector(state=>state.auth)
+
     
     const dispatch = useDispatch()
     useEffect(()=>{
-        dispatch(fetchCommnet(id))
-    },[id,dispatch])
+       if(update || id) {
+
+            dispatch(fetchCommnet(id))
+        }
+    },[id,dispatch,update])
 
     const handleComment = (e)=>{
         e.preventDefault()
@@ -30,7 +34,9 @@ const MyComment = ({id}) => {
 
         dispatch(postCommnet(commentDetails))
     }
-
+if(commentLoading){
+    return <Loader height={'min-h-[10vh]'} />
+}
 
     return (
         <div className='space-y-4'>

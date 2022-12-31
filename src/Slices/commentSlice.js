@@ -21,7 +21,7 @@ export const postCommnet = createAsyncThunk('comments/postComment',async(comment
 })
 export const fetchCommnet = createAsyncThunk('comments/fetchComment',async(id)=>{
     try{
-        const res = await fetch(`${process.env.REACT_APP_api}/${id}`)
+        const res = await fetch(`${process.env.REACT_APP_api}/comment/${id}`)
     const data = await res.json()
     return data
     }
@@ -37,6 +37,7 @@ const commentSlice = createSlice({
     initialState:{
         commentLoading:false,
         comments:[],
+        update:true,
         error:null
     },
     extraReducers:(builder)=>{
@@ -45,6 +46,7 @@ const commentSlice = createSlice({
         })
         builder.addCase(fetchCommnet.fulfilled,(state,action)=>{
             state.commentLoading=false
+            state.update=false
             state.comments=action.payload
             state.error=null
         })
@@ -58,6 +60,7 @@ const commentSlice = createSlice({
         })
         builder.addCase(postCommnet.fulfilled,(state)=>{
             state.commentLoading=false
+            state.update = true
             state.error=null
         })
         builder.addCase(postCommnet.rejected,(state,action)=>{

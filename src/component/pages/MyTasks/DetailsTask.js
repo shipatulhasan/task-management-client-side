@@ -2,6 +2,8 @@ import React from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
+import MyComment from "../MyComments/MyComments";
+
 
 const DetailsTask = ({
   taskDetails,
@@ -70,6 +72,9 @@ const DetailsTask = ({
                     {details}
                   </p>
                 </div>
+                {
+                  taskDetails?.completed && <MyComment id={_id} />
+                }
                 <div className="flex items-center gap-4 justify-center">
                   <button
                     onClick={() => handleModal(_id)}
