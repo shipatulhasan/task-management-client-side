@@ -36,6 +36,7 @@ const commentSlice = createSlice({
     name:"comments",
     initialState:{
         commentLoading:false,
+        
         comments:[],
         update:true,
         error:null

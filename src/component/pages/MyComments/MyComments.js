@@ -13,7 +13,6 @@ const MyComment = ({id}) => {
     const dispatch = useDispatch()
     useEffect(()=>{
        if(update || id) {
-
             dispatch(fetchCommnet(id))
         }
     },[id,dispatch,update])
@@ -33,16 +32,26 @@ const MyComment = ({id}) => {
         // console.log(commentDetails)
 
         dispatch(postCommnet(commentDetails))
+        form.reset()
     }
-if(commentLoading){
-    return <Loader height={'min-h-[10vh]'} />
-}
+
 
     return (
         <div className='space-y-4'>
-            <div>
-            {comments.map((comment,i)=><Comment key={comment._id} mycomment={comment} index={i===comments.length-1} />)}
+            {
+                comments.length>0 ? <div>
+                {comments.map((comment,i)=><Comment key={comment._id} mycomment={comment} index={i===comments.length-1} />)}
+                </div>
+                :
+                <div className='mx-auto w-full min-h-[40vh] h-full grid place-content-center'>
+               
+            <p className=" text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+            No comments yet
+            </p>
+     
             </div>
+            }
+            
             <div>
 
             <CommentForm handleComment={handleComment} isLoading={commentLoading} />

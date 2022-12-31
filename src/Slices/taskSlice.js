@@ -75,7 +75,6 @@ const taskSlice = createSlice({
     initialState:{
         isLoading:false,
         updateLoading:false,
-        updateStatus:true,
         tasks:[],
         addTask:{},
         error:null
@@ -87,7 +86,7 @@ const taskSlice = createSlice({
         builder.addCase(fetchTasks.fulfilled,(state,action)=>{
             state.isLoading=false
             state.tasks=action.payload
-            state.updateStatus=false
+            
             state.error=null
         })
         builder.addCase(fetchTasks.rejected,(state,action)=>{
@@ -113,8 +112,11 @@ const taskSlice = createSlice({
         })
         builder.addCase(updateTask.fulfilled,(state,action)=>{
             state.updateLoading=false
-            state.isLoading=false
-            state.updateStatus=true
+            const updatedTask = action.payload.updatedTask
+            const existingTask = state.tasks.filter(task=>task._id!==updatedTask._id)
+            console.log(existingTask)
+           state.tasks = [updatedTask,...existingTask]
+        
             state.error=null
         })
         builder.addCase(updateTask.rejected,(state,action)=>{

@@ -9,12 +9,12 @@ const Overview2 = () => {
 
         <div className="relative lg:w-1/2 border border-slate-200 rounded shadow-lg">
             <img
-              className=" object-contain w-full  h-56 sm:h-96 rounded "
+              className=" object-contain w-full h-56 sm:h-96 rounded "
               src={img}
               alt=""
             />
             <img
-              className="absolute bottom-0 right-[-25px] object-contain w-72 h-56 rounded "
+              className="absolute shadow-lg md:shadow-none bottom-[-20px] md:bottom-0 right-0 lg:right-[-25px] object-contain w-32 h-32 md:w-72 md:h-56 rounded "
               src={img2}
               alt=""
             />

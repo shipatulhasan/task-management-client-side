@@ -3,12 +3,15 @@ import {useSelector,useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { uploadImage } from '../../../api/uploadImage';
 import { deleteTask, fetchTasks, updateTask } from '../../../Slices/taskSlice';
+
 import UpdateTask from '../UpdateTask';
 import DetailsTask from './DetailsTask';
 import TaskCard from './TaskCard';
+import TaskSkeleton from './TaskSkeleton'
+
 
 const MyTask = ({myTasks}) => {
-    const {updateLoading,updateStatus,tasks} = useSelector(state=>state.tasks)
+    const {isLoading,updateLoading,tasks} = useSelector(state=>state.tasks)
     const {userInfo} = useSelector(state=>state.auth)
     const [taskDetails,setTaskDetails] = useState({})
     const [existingTask,setExistingTask] = useState({})
@@ -19,12 +22,8 @@ const MyTask = ({myTasks}) => {
    
     const dispatch = useDispatch()
     useEffect(()=>{
-        if(userInfo?.email||updateStatus){
-
-            dispatch(fetchTasks(userInfo?.email))
-        }
-        
-    },[updateStatus,userInfo?.email,dispatch])
+        dispatch(fetchTasks(userInfo?.email))   
+    },[userInfo?.email,dispatch])
 
     
 
@@ -161,17 +160,14 @@ const MyTask = ({myTasks}) => {
         }
         dispatch(updateTask({post,_id}))
         form.reset()
-        }
-
-        
+        }    
     }
-
     return (
-        // isLoading ? <TaskSkeleton /> :
-        <div className='p-10'>
+        // 
+        <div className='px-5 md:px-10 py-20'>
              <div className="grid gap-5 row-gap-5 sm:grid-cols-2 lg:grid-cols-3">
                  {
-                 myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleModal={handleModal} handleComplete={handleComplete} handleInComplete={handleInComplete} handleAddDetails={handleAddDetails} isLoading={updateLoading} />)
+              isLoading ? <TaskSkeleton /> : myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleModal={handleModal} handleComplete={handleComplete} handleInComplete={handleInComplete} handleAddDetails={handleAddDetails} isLoading={updateLoading} />)
                  }
              
                  {
