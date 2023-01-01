@@ -13,13 +13,6 @@ Hosted in Firebase -> [Task manager](https://task-manager-1f082.web.app/)
 4. Express to backend.
 5. Jwt for secure auth.
 
-## Future implemention
-### In future We will come with this app with lots of feature. 
-
-1. Implement international payment system
-2. Dark/Light mode switching
-3. Added message system.
-
 #### And much more
 
 ## Redux Redux-tool-kit
