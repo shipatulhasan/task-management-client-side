@@ -25,6 +25,7 @@ const MyTask = ({myTasks}) => {
         dispatch(fetchTasks(userInfo?.email))   
     },[userInfo?.email,dispatch])
 
+
     
 
     const handleInComplete = (_id)=>{
@@ -53,6 +54,7 @@ const MyTask = ({myTasks}) => {
         if(permission){
 
             dispatch(deleteTask(id))
+            setShow(false)
         }
     }
     const handleModal = (id)=>{
@@ -164,10 +166,24 @@ const MyTask = ({myTasks}) => {
     }
     return (
         // 
-        <div className='px-5 md:px-10 py-20'>
+        <div className='py-20 px-5 md:px-10'>
+
              <div className="grid gap-5 row-gap-5 sm:grid-cols-2 lg:grid-cols-3">
                  {
-              isLoading ? <TaskSkeleton /> : myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleModal={handleModal} handleComplete={handleComplete} handleInComplete={handleInComplete} handleAddDetails={handleAddDetails} isLoading={updateLoading} />)
+              isLoading ? <TaskSkeleton /> : <>
+              
+                    {
+                        myTasks.length ===0 ?<div className="text-center col-span-full">
+                        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-normal ">
+                         No task{" "}
+                          <span className=" text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                            available
+                          </span>
+                        </h2>
+                      </div>:myTasks.map(task=><TaskCard key={task._id} task={task} handleDetails={handleDetails} handleDelete={handleDelete} handleModal={handleModal} handleComplete={handleComplete} handleInComplete={handleInComplete} handleAddDetails={handleAddDetails} isLoading={updateLoading} />)
+                    }
+              
+              </>
                  }
              
                  {

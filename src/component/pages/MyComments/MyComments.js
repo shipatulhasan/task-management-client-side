@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCommnet, postCommnet } from '../../../Slices/commentSlice';
 import CommentForm from './CommentForm'
 import Comment from './Comment'
-import Loader from '../../Shared/Spinner/Loader'
 const MyComment = ({id}) => {
     
     const {comments,commentLoading,update} = useSelector(state=>state.comment)
@@ -43,7 +42,7 @@ const MyComment = ({id}) => {
                 {comments.map((comment,i)=><Comment key={comment._id} mycomment={comment} index={i===comments.length-1} />)}
                 </div>
                 :
-                <div className='mx-auto w-full min-h-[40vh] h-full grid place-content-center'>
+                <div className='mx-auto w-full h-full grid place-content-center'>
                
             <p className=" text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
             No comments yet
